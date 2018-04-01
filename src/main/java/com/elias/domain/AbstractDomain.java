@@ -1,11 +1,16 @@
 package com.elias.domain;
 
+import java.io.*;
+
 import javax.persistence.*;
 
-public abstract class AbstractDomain {
+@MappedSuperclass
+public abstract class AbstractDomain implements Serializable {
 	
+	private static final long serialVersionUID = 1L;
+
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Integer id;
 
 	public Integer getId() {

@@ -5,6 +5,8 @@ import org.hibernate.boot.registry.*;
 import org.hibernate.cfg.*;
 import org.hibernate.service.*;
 
+import com.elias.domain.*;
+
 public final class HibernateUtil {
 	
 	private HibernateUtil(){}
@@ -15,6 +17,7 @@ public final class HibernateUtil {
 		if (sessionFactory == null) {
 			try {
 				Configuration configuration = new Configuration().configure();
+				configuration.addAnnotatedClass(Estoque.class);
 				ServiceRegistry registry = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties()).build();
 				sessionFactory = configuration.buildSessionFactory(registry);
 			} catch (Throwable e) {

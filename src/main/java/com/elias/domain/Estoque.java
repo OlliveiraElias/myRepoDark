@@ -2,9 +2,10 @@ package com.elias.domain;
 
 import javax.persistence.*;
 
+@SuppressWarnings("serial")
 @Entity
 public class Estoque extends AbstractDomain {
-	
+
 	@Column
 	private String dsProduto;
 	

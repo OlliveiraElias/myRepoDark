@@ -25,7 +25,7 @@ public class GenericDao<T extends AbstractDomain> {
 		Transaction t = null;
 		try {
 			t = session.beginTransaction();
-			session.save(t);
+			session.save(domain);
 			t.commit();
 		} catch (Exception e) {
 			if (t != null) {
@@ -47,6 +47,20 @@ public class GenericDao<T extends AbstractDomain> {
 			Query<T> q = session.createQuery(criteria);
 			List<T> list = q.getResultList();
 			return list;
+		} finally {
+			session.close();
+		}
+	}
+	
+	public T buscaPorCodigo(final int codigo) {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		try {
+			CriteriaBuilder builder = session.getCriteriaBuilder();
+			CriteriaQuery<T> query = builder.createQuery(clazz);
+			Root<T> root = query.from(clazz);
+			query.where(builder.equal(root.get("id"), codigo));
+			Query<T> q = session.createQuery(query);
+			return q.getSingleResult();
 		} finally {
 			session.close();
 		}
